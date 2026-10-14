@@ -1,0 +1,20 @@
+.aside {
+  width: 400px;
+  background-color: #042031;
+  color: white;
+  padding: 2rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+  nav {
+    ul {
+      li {
+        margin-bottom: 15px;
+        a {
+          display: block;
+          text-align: left;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

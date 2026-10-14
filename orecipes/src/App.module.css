@@ -1,0 +1,16 @@
+.globalContainer {
+  display: flex;
+  width: 100%;
+
+  .mainContainer {
+    width: calc(100% - 400px);
+    padding: 0 2rem;
+    .main {
+      h1 {
+        color: #209cee;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+}
