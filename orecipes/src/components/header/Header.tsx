@@ -1,9 +1,11 @@
 import { Link } from "react-router"
 import styles from "./header.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import type { IToken } from "../../@types"
 
 export default function Header() {
   const [message, setMessage] = useState("")
+  const [token, setToken] = useState<IToken | undefined>(undefined)
 
   async function handleAction(formdata: FormData) {
     const email = formdata.get("email") as string
@@ -19,24 +21,46 @@ export default function Header() {
       body: JSON.stringify(body),
     })
 
-    const token = await response.json()
+    const data = await response.json()
 
-    if (!token?.pseudo) {
+    if (!data?.pseudo) {
       setMessage("Erreur de connexion, veuillez réessayer")
     } else {
-      setMessage(token.pseudo)
+      setMessage(data.pseudo)
+      setToken(data)
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("pseudo", data.pseudo)
+      localStorage.setItem("logged", data.logged)
     }
-
-    console.log(token)
   }
+
+  // This useEffect, is just checking if theres credentials infos inside the local storage
+  // If it does, then we set the token state
+  // And we log the user
+  useEffect(() => {
+    async function getStorage() {
+      if (
+        localStorage.getItem("token") &&
+        localStorage.getItem("pseudo") &&
+        localStorage.getItem("logged")
+      ) {
+        setToken({
+          logged: Boolean(localStorage.getItem("logged")),
+          pseudo: String(localStorage.getItem("pseudo")),
+          token: String(localStorage.getItem("token")),
+        })
+      }
+    }
+    getStorage()
+  }, [])
 
   return (
     <header className={styles.header}>
       <Link className={styles.homeLink} to="/">
         <img src="/logo.png" alt="Accès Accueil Orecipes" />
       </Link>
-      {message ? (
-        <p>{message}</p>
+      {message || token ? (
+        <p>{message || token?.pseudo}</p>
       ) : (
         <form action={handleAction}>
           <input name="email" type="email" placeholder="Adresse Email" />
