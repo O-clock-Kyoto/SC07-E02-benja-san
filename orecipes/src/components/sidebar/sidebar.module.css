@@ -1,0 +1,17 @@
+.aside {
+  width: 400px;
+  background-color: #042031;
+  color: white;
+  padding: 2rem;
+  box-sizing: border-box;
+  nav {
+    ul {
+      li {
+        a {
+          display: block;
+          text-align: left;
+        }
+      }
+    }
+  }
+}

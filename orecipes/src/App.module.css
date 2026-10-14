@@ -1,5 +1,13 @@
-.main {
-  h1 {
-    color: #209cee;
+.globalContainer {
+  display: flex;
+  width: 100%;
+
+  .mainContainer {
+    width: calc(100% - 400px);
+    .main {
+      h1 {
+        color: #209cee;
+      }
+    }
   }
 }
