@@ -3,13 +3,20 @@ import styles from "./App.module.css"
 import Header from "./components/header/Header"
 import Sidebar from "./components/sidebar/Sidebar"
 import type { IRecipe } from "./@types/index.d.ts"
-import Recipes from "./components/recipes/Recipes.tsx"
+import { Route, Routes } from "react-router"
+import Home from "./pages/home/Home.tsx"
+import RecipePage from "./pages/recipePage/RecipePage.tsx"
 
 function App() {
   //Prepare state to host recipes
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   const [errorMessage, setErrorMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  //create function to find one recipe
+  function findOneRecipeBySlug(slug: string): IRecipe | undefined {
+    return recipes.find((recipe) => recipe.slug === slug)
+  }
 
   //Retrieve all recipes
   useEffect(() => {
@@ -40,23 +47,23 @@ function App() {
       <section className={styles.mainContainer}>
         <Header />
         <main className={styles.main}>
-          <h1>Les recettes Orecipes</h1>
-          {isLoading ? (
-            <p>Loading.....</p>
-          ) : errorMessage ? (
-            <p>{errorMessage}</p>
-          ) : (
-            <>
-              {recipes.length === 0 ? (
-                <h2>Pas de recettes pour le moment</h2>
-              ) : (
-                <>
-                  <h2>Voici nos {recipes.length} recettes</h2>
-                  <Recipes recipes={recipes} />
-                </>
-              )}
-            </>
-          )}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  isLoading={isLoading}
+                  errorMessage={errorMessage}
+                  recipes={recipes}
+                />
+              }
+            />
+            <Route
+              path="/recipes/:recipeSlug"
+              element={<RecipePage findOneRecipeBySlug={findOneRecipeBySlug} />}
+            />
+            <Route path="*" element={<h1>404 Not found</h1>} />
+          </Routes>
         </main>
       </section>
     </div>
