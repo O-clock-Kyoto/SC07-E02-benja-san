@@ -43,7 +43,7 @@ function App() {
 
   return (
     <div className={styles.globalContainer}>
-      <Sidebar />
+      <Sidebar recipes={recipes} />
       <section className={styles.mainContainer}>
         <Header />
         <main className={styles.main}>

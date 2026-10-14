@@ -1,13 +1,25 @@
+import { NavLink } from "react-router"
+import type { IRecipe } from "../../@types"
 import styles from "./sidebar.module.css"
 
-export default function Sidebar() {
+//Typer recipes props
+interface SidebarProps {
+  recipes: IRecipe[]
+}
+
+export default function Sidebar({ recipes }: SidebarProps) {
   return (
     <aside className={styles.aside}>
       <nav>
         <ul>
           <li>
-            <a href="/">Accueil</a>
+            <NavLink to="/">Accueil</NavLink>
           </li>
+          {recipes.map((recipe) => (
+            <li>
+              <NavLink to={`/recipes/${recipe.slug}`}>{recipe.title}</NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
