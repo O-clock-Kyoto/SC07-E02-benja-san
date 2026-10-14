@@ -16,7 +16,7 @@ export default function Sidebar({ recipes }: SidebarProps) {
             <NavLink to="/">Accueil</NavLink>
           </li>
           {recipes.map((recipe) => (
-            <li>
+            <li key={recipe.id}>
               <NavLink to={`/recipes/${recipe.slug}`}>{recipe.title}</NavLink>
             </li>
           ))}
