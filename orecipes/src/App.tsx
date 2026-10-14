@@ -6,6 +6,7 @@ import type { IRecipe } from "./@types/index.d.ts"
 import { Route, Routes } from "react-router"
 import Home from "./pages/home/Home.tsx"
 import RecipePage from "./pages/recipePage/RecipePage.tsx"
+import FavoritesPage from "./pages/favorites/FavoritesPage.tsx"
 
 function App() {
   //Prepare state to host recipes
@@ -62,6 +63,7 @@ function App() {
               path="/recipes/:recipeSlug"
               element={<RecipePage findOneRecipeBySlug={findOneRecipeBySlug} />}
             />
+            <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="*" element={<h1>404 Not found</h1>} />
           </Routes>
         </main>

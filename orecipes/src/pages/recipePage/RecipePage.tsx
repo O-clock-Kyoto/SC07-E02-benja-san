@@ -1,6 +1,5 @@
-import { Link, useParams } from "react-router"
+import { useParams } from "react-router"
 import type { IRecipe } from "../../@types"
-import { useLayoutEffect } from "react"
 
 interface RecipePageProps {
   findOneRecipeBySlug: (slug: string) => IRecipe | undefined
