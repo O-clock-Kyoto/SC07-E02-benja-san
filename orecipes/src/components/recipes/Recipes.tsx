@@ -10,7 +10,7 @@ export default function Recipes({ recipes }: RecipesProps) {
     <ul className={styles.recipesContainer}>
       {recipes.map((recipe) => (
         <li key={recipe.id}>
-          <Recipe recipe={recipe} />
+          <Recipe recipeProp={recipe} />
         </li>
       ))}
     </ul>
