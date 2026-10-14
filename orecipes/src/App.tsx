@@ -3,6 +3,7 @@ import styles from "./App.module.css"
 import Header from "./components/header/Header"
 import Sidebar from "./components/sidebar/Sidebar"
 import type { IRecipe } from "./@types/index.d.ts"
+import Recipes from "./components/recipes/Recipes.tsx"
 
 function App() {
   //Prepare state to host recipes
@@ -51,24 +52,7 @@ function App() {
               ) : (
                 <>
                   <h2>Voici nos {recipes.length} recettes</h2>
-                  <ul>
-                    {recipes.map((recipe) => (
-                      <li key={recipe.id}>
-                        <article>
-                          <div>
-                            <img src={recipe.thumbnail} alt={recipe.title} />
-                          </div>
-                          <div>
-                            <h3>{recipe.title}</h3>
-                            <p>difficulty : {recipe.difficulty}</p>
-                            <a href={`/recipes/${recipe.slug}`}>
-                              Voir la recette
-                            </a>
-                          </div>
-                        </article>
-                      </li>
-                    ))}
-                  </ul>
+                  <Recipes recipes={recipes} />
                 </>
               )}
             </>
