@@ -16,3 +16,9 @@ interface IIngredient {
   unit: string
   name: string
 }
+
+export interface IToken {
+  logged: boolean
+  pseudo: string
+  token: string
+}

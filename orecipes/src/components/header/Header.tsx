@@ -1,42 +1,38 @@
 import { Link } from "react-router"
 import styles from "./header.module.css"
-import { useState } from "react"
+import { useAuth } from "../../context/AuthContext"
+import { useEffect } from "react"
 
 export default function Header() {
-  const [message, setMessage] = useState("")
+  const { token, message, handleAction, setToken } = useAuth()
 
-  async function handleAction(formdata: FormData) {
-    const email = formdata.get("email") as string
-    const password = formdata.get("password") as string
-    const body = {
-      email: email,
-      password: password,
+  // This useEffect, is just checking if theres credentials infos inside the local storage
+  // If it does, then we set the token state
+  // And we log the user
+  useEffect(() => {
+    async function getStorage() {
+      if (
+        localStorage.getItem("token") &&
+        localStorage.getItem("pseudo") &&
+        localStorage.getItem("logged")
+      ) {
+        setToken({
+          logged: Boolean(localStorage.getItem("logged")),
+          pseudo: String(localStorage.getItem("pseudo")),
+          token: String(localStorage.getItem("token")),
+        })
+      }
     }
-
-    const response = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-
-    const token = await response.json()
-
-    if (!token?.pseudo) {
-      setMessage("Erreur de connexion, veuillez réessayer")
-    } else {
-      setMessage(token.pseudo)
-    }
-
-    console.log(token)
-  }
+    getStorage()
+  }, [setToken])
 
   return (
     <header className={styles.header}>
       <Link className={styles.homeLink} to="/">
         <img src="/logo.png" alt="Accès Accueil Orecipes" />
       </Link>
-      {message ? (
-        <p>{message}</p>
+      {message || token ? (
+        <p>{message || token?.pseudo}</p>
       ) : (
         <form action={handleAction}>
           <input name="email" type="email" placeholder="Adresse Email" />
