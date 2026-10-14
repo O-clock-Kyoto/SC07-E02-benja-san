@@ -1,24 +1,16 @@
 import type { IRecipe } from "../../@types"
-
+import Recipe from "../recipe/Recipe"
+import styles from "./recipes.module.css"
 interface RecipesProps {
   recipes: IRecipe[]
 }
 
 export default function Recipes({ recipes }: RecipesProps) {
   return (
-    <ul>
+    <ul className={styles.recipesContainer}>
       {recipes.map((recipe) => (
         <li key={recipe.id}>
-          <article>
-            <div>
-              <img src={recipe.thumbnail} alt={recipe.title} />
-            </div>
-            <div>
-              <h3>{recipe.title}</h3>
-              <p>difficulty : {recipe.difficulty}</p>
-              <a href={`/recipes/${recipe.slug}`}>Voir la recette</a>
-            </div>
-          </article>
+          <Recipe recipe={recipe} />
         </li>
       ))}
     </ul>
