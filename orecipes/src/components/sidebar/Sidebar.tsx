@@ -1,13 +1,10 @@
 import { NavLink } from "react-router"
-import type { IRecipe } from "../../@types"
 import styles from "./sidebar.module.css"
+import { useRecipes } from "../../context/RecipeContext"
 
-//Typer recipes props
-interface SidebarProps {
-  recipes: IRecipe[]
-}
+export default function Sidebar() {
+  const { recipes } = useRecipes()
 
-export default function Sidebar({ recipes }: SidebarProps) {
   return (
     <aside className={styles.aside}>
       <nav>
@@ -20,6 +17,9 @@ export default function Sidebar({ recipes }: SidebarProps) {
               <NavLink to={`/recipes/${recipe.slug}`}>{recipe.title}</NavLink>
             </li>
           ))}
+          <li>
+            <NavLink to="/favorites">Favorites</NavLink>
+          </li>
         </ul>
       </nav>
     </aside>
