@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react"
-import { useAuth } from "../../context/AuthContext"
-import type { IRecipe } from "../../@types"
+import Recipes from "../../components/recipes/Recipes"
+import { useFavorites } from "../../context/FavoriteContext"
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useState<IRecipe[]>([])
-
-  const { token } = useAuth()
-
-  useEffect(() => {
-    async function fetchFavorites() {
-      const response = await fetch("http://localhost:3000/api/favorites", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token?.token}`,
-        },
-      })
-      const favoritesJson = await response.json()
-      setFavorites(favoritesJson.favorites)
-    }
-    fetchFavorites()
-  }, [token])
-
-  console.log(favorites)
+  const { favorites } = useFavorites()
   return (
     <section>
       <h1>Vos Favoris !</h1>
+      {favorites.length === 0 ? (
+        <p>PAs encore de recettes favorites !</p>
+      ) : (
+        <Recipes recipes={favorites} />
+      )}
     </section>
   )
 }

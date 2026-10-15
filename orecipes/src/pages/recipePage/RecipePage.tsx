@@ -1,12 +1,9 @@
 import { useParams } from "react-router"
-import type { IRecipe } from "../../@types"
+import { useRecipes } from "../../context/RecipeContext"
 
-interface RecipePageProps {
-  findOneRecipeBySlug: (slug: string) => IRecipe | undefined
-}
-
-export default function RecipePage({ findOneRecipeBySlug }: RecipePageProps) {
+export default function RecipePage() {
   const { recipeSlug } = useParams()
+  const { findOneRecipeBySlug } = useRecipes()
   const recipe = findOneRecipeBySlug(String(recipeSlug))
 
   return (

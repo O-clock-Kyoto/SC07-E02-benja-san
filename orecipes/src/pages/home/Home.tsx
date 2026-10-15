@@ -1,17 +1,8 @@
-import type { IRecipe } from "../../@types"
 import Recipes from "../../components/recipes/Recipes"
+import { useRecipes } from "../../context/RecipeContext"
 
-interface RecipesProps {
-  isLoading: boolean
-  errorMessage: string
-  recipes: IRecipe[]
-}
-
-export default function Home({
-  isLoading,
-  errorMessage,
-  recipes,
-}: RecipesProps) {
+export default function Home() {
+  const { isLoading, errorMessage, recipes } = useRecipes()
   return (
     <>
       <h1>Les recettes Orecipes</h1>
